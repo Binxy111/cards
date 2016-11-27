@@ -69,11 +69,45 @@ newDeck.splice(num, 1);
         <p>Finally, I broke out chunks of the script into their own functions. I did this mostly while I was making the process repeatable, which required me to make the left side (temporarily) clickable and to reshuffle the deck. That led me to wrap the initial instructions in a new <code class="inline">setup()</code> function so I could run it again for the replay in the <code class="inline">deckIsFinished()</code> function.</p>
 
     </section>
-    <section class="clearfix">
+    <section>
         <h2>But isn’t this stupid? It’s not even a game</h2>
         <p>Fair enough. It's not a game at all. But now that I've learned how to handle the complete deck by showing every card exactly once, never repeating any, in a random order that pretty neatly simulates a real deck of cards, I can move on to something more competitive.</p>
     </section>
+    <section>
+        <h2>And then I realized I should not draw a random card</h2>
+        <p>What was I thinking? Obviously, I wasn't. When we take a card from the top of the deck, we are not taking a random card; we are taking whichever one is on top. This depends on a legitimate shuffle, which I had in fact accomplished (see above).</p>
 
+        <p>So where I used to have this:</p>
+        <div class="codey">
+        <pre><code>$('#rightcard img').click(function() {
+	var num = Math.floor(Math.random() * (newDeck.length - 1) );
+	var playerCard = newDeck[num];
+	var card = 'cards/' + playerCard.suit + playerCard.number + '.png';
+	...
+</code></pre>
+        </div>
+        <p>I now have this:</p>
+        <div class="codey">
+        <pre><code>$('#rightcard img').click(function() {
+	var playerCard = newDeck.pop();
+	var card = 'cards/' + playerCard.suit + playerCard.number + '.png';
+	...
+</code></pre>
+        </div>
+        <p>I also deleted the <code class="inline">splice()</code> instruction, because with <code class="inline">pop()</code>, it's no longer needed. The <code class="inline">pop()</code> method automatically deletes the last item in the array. Usually we capture it with a variable as we pop it, as I have done with <code class="inline">playerCard</code> here.</p>
+
+        <p>You might argue that <code class="inline">pop()</code> is suspect, because by taking the card from the <em>end</em> of the array, I'm taking from the bottom of the deck. The alternative, however, is inferior. Although <code class="inline">shift()</code> takes the <em>first</em> item out of the array, it is less efficient than <code class="inline">pop()</code> because taking the first item means the entire array must be re-indexed, meaning index item 2 becomes 1, and 3 becomes 2, and so on. I learned a lot about JavaScript arrays by reading this: <a href="https://gamealchemist.wordpress.com/2013/05/01/lets-get-those-javascript-arrays-to-work-fast/">Let’s get those Javascript Arrays to work fast</a>.</p>
+    </section>
+    <section>
+        <h2>Summary</h2>
+        <p>My first instinct for handling a deck of cards (draw a random card) turned out to be wrong, but by following that instinct, I learned about <code class="inline">splice()</code> to remove any specific item from inside an array. If I ever need to pluck a random item from an array and delete it, now I know how.</p>
+
+        <p>Testing my app led me to search for a shuffle algorithm. Finding one, and adding it to my code, made the order of cards in my array truly random, which allowed me to treat it like a real deck, properly shuffled, and simply draw cards in order from it.</p>
+
+        <p>I considered using <code class="inline">shift()</code> to draw cards from the top of the deck (the start of the array), but a quick search revealed that <code class="inline">pop()</code> was a much superior solution, and it won't change the fairness of a game to draw cards from the bottom of the deck (the end of the array) instead of from the top &mdash; even though that's not how we would do it with a physical deck.</p>
+    </section>
+
+    <!-- footer area -->
     <p>Text, code and design by <a href="http://mindymcadams.com/">Mindy McAdams</a></p>
     <p>Fork it at <a href="https://github.com/macloo/cards">GitHub</a></p>
 

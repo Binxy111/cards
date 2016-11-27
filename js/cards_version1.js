@@ -12,7 +12,7 @@ $(document).ready(function(){
         for (var i=0; i < cards.length; i++) {
             newDeck[i] = cards[i];
         }
-        // shuffle the new deck - function below
+        // shuffle the new deck
         newDeck = shuffle(newDeck);
 
         // write number of cards in the deck
@@ -25,8 +25,10 @@ $(document).ready(function(){
 
     // function handles all the card draws (each click on deck)
     $('#rightcard img').click(function() {
-        // take one card - pop() removes it from array
-        var playerCard = newDeck.pop();
+        var num = Math.floor(Math.random() * (newDeck.length - 1) );
+        // number above changes each turn
+        // now find that index in the JSON file array
+        var playerCard = newDeck[num];
         // create path to card image, using the properties in the card object
         var card = 'cards/' + playerCard.suit + playerCard.number + '.png';
 
@@ -36,6 +38,9 @@ $(document).ready(function(){
         // write how many cards have been drawn
         cardsDrawnCount++;
         $('#cardsDrawn').text(cardsDrawnCount);
+
+        // remove object from the array (remove card)
+        newDeck.splice(num, 1);
 
         // write how many cards are left in the face-down deck
         $('#cardsLeft').text(newDeck.length);
