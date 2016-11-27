@@ -47,7 +47,7 @@
         <p>Once that was working, I added the random number script. I knew I would need to destroy the deck one card at a time as I moved the cards from the deck to the face-up stack on the left. It's necessary so that cards don't repeat. That's why I copied all the card objects from <code class="inline">cards</code> (the JSON file) into a new array, <code class="inline">newDeck</code>.</p>
 
         <div class="codey">
-        <pre><code>for (var i=0; i < cards.length; i++) {
+        <pre><code>for (var i=0; i &lt; cards.length; i++) {
     newDeck[i] = cards[i];
 }
 </code></pre>
@@ -75,6 +75,7 @@ newDeck.splice(num, 1);
     </section>
 
     <p>Text, code and design by <a href="http://mindymcadams.com/">Mindy McAdams</a></p>
+    <p>Fork it at <a href="https://github.com/macloo/cards">GitHub</a></p>
 
 </div>
 
