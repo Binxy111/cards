@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cards</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+<div id="wrapper">
+    <h1>Card Tricks</h1>
+
+    <div class="cardplace" id="leftcard">
+        <!-- face-up card will appear here -->
+    </div>
+    <div class="cardplace" id="rightcard">
+        <!-- face-down card is here -->
+        <img class="card" src="backs/blue.png" alt="Playing card">
+    </div>
+
+    <div id="info" class="clearfix">
+    <p class="leftp">Number of cards drawn: <span id="cardsDrawn">0</span></p>
+    <p class="rightp">Number of cards remaining: <span id="cardsLeft"></span></p>
+    </div>
+
+    <section class="clearfix">
+        <h2>About this page and its code</h2>
+        <p>It all started as an idea for practicing jQuery with images of playing cards. I wanted to make the cards appear and change using jQuery. When I first tried it, I didn't understand jQuery well enough, and I gave up. Now I know jQuery a little more, and it works the way I envisioned.</p>
+
+        <p>Step 1 was finding the card images. They come from the Ornamental Guyenne deck by <a href="https://openclipart.org/user-detail/mariotomo">mariotomo</a> at <a href="https://openclipart.org/">Open Clip Art</a>.</p>
+
+        <p>Step 2 was handling the cards. At first I thought I wanted an array. Then I thought I should use a multidimensional array (suits plus card values). Finally I decided a JSON file would work best, giving me flexibility to make other card applications later on. I made the file quickly by creating an Excel spreadsheet and then dumping it into <a href="http://shancarter.github.io/mr-data-converter/">Mr. Data Converter</a>.</p>
+
+        <p>Step 3 was to lay out the DIVs so I could have two cards side by side, with the deck face-down on the right and the turned cards face-up on the left. Like all things with floats, there were some frustrations. The worst was when I removed the card image element on the left and the DIV collapsed. I finally realized I could fix it by adding height in CSS.</p>
+
+        <p>The first jQuery thing was to have a card appear on the left when I clicked the deck on the right. I just used a hard-coded path at first. (At that point, I had the image tag in the HTML. Later I removed that element and wrote it in with jQuery.)</p>
+
+        <div class="codey">
+        <pre><code>$('#rightcard img').click(function() {
+    var card = "cards/d01.png";
+    $('#leftcard img').attr('src', card);
+}
+</code></pre>
+        </div>
+
+        <p>Once that was working, I added the random number script. I knew I would need to destroy the deck one card at a time as I moved the cards from the deck to the face-up stack on the left. It's necessary so that cards don't repeat. That's why I copied all the card objects from <code class="inline">cards</code> (the JSON file) into a new array, <code class="inline">newDeck</code>.</p>
+
+        <div class="codey">
+        <pre><code>for (var i=0; i < cards.length; i++) {
+    newDeck[i] = cards[i];
+}
+</code></pre>
+        </div>
+
+        <p>What I needed to do was remove the card object from <code class="inline">newDeck</code> after I had randomly drawn it. Probably the first time I've used <code class="inline">splice()</code>. It lets us delete an item from an array using its index (represented here by the variable <code class="inline">num</code>). (Note: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice"><code class="inline">splice()</code></a> is plain JavaScript, not jQuery.)</p>
+
+        <div class="codey">
+        <pre><code>var num = Math.floor(Math.random() * (newDeck.length - 1) );
+var playerCard = newDeck[num];
+newDeck.splice(num, 1);
+</code></pre>
+        </div>
+
+        <p>What I didn't realize, though, was that I would need to <em>shuffle</em> the deck if I wanted to replay, or go through the deck again. After a few tests, I saw too much repetition in the order of the cards as they were drawn (because random numbers in JavaScript are not <em>really</em> random). I felt sure that someone with more skill than I possess would have solved this already, and I was right. I found this great explainer about the <a href="https://bost.ocks.org/mike/shuffle/">Fisher–Yates Shuffle</a>, and it gave me an efficient, fast function for shuffling my array each time.</p>
+
+        <p>Little by little, I added things to the script, like the text on each side that shows how many cards have been drawn and how many cards remain in the array. Each time I added something or took something away, of course, I broke something. One thing at a time: Break it, fix it.</p>
+
+        <p>Finally, I broke out chunks of the script into their own functions. I did this mostly while I was making the process repeatable, which required me to make the left side (temporarily) clickable and to reshuffle the deck. That led me to wrap the initial instructions in a new <code class="inline">setup()</code> function so I could run it again for the replay in the <code class="inline">deckIsFinished()</code> function.</p>
+
+    </section>
+    <section class="clearfix">
+        <h2>But isn’t this stupid? It’s not even a game</h2>
+        <p>Fair enough. It's not a game at all. But now that I've learned how to handle the complete deck by showing every card exactly once, never repeating any, in a random order that pretty neatly simulates a real deck of cards, I can move on to something more competitive.</p>
+    </section>
+
+    <p>Text, code and design by <a href="http://mindymcadams.com/">Mindy McAdams</a></p>
+
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/cards.json"></script>
+<script src="js/cards.js"></script>
+</body>
+</html>

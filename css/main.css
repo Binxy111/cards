@@ -1,0 +1,106 @@
+* { box-sizing: border-box; }
+
+body {
+    font-family: sans-serif;
+    font-size: 100%;
+    background: #fff;
+    color: #333;
+    margin: 0;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+}
+#wrapper {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+h1 { font-size: 3em; margin: 0; padding: 30px 0 20px 0; }
+h2 { font-size: 2em; margin: 0; padding-top: 10px; }
+
+section {
+    background: #d9fcd9;
+    padding: 20px 60px;
+}
+section p {
+    font-size: 1.5em;
+    text-align: left;
+}
+
+/* format the code snippets */
+
+.codey {
+    background: #cfe8cf;
+    padding: 5px 20px;
+    overflow: auto;
+}
+pre {
+    text-align: left;
+}
+code {
+    font-family: monospace;
+    font-size: 1.5em;
+    line-height: 1.6em;
+    text-align: left;
+}
+code.inline {
+    font-size: 1.1em;
+    line-height: inherit;
+}
+
+/* link styles */
+
+a { color: #00c; }
+a:hover {
+    color: #ad26ab;
+    text-decoration: none;
+}
+
+/* things used by the jQuery script and cards are all below */
+
+/* two divs, side by side */
+.cardplace {
+    float: left;
+    width: 50%;
+    /* without height, the left div collapses */
+    height: 418px; /* proportional to 300px width of card */
+}
+/* for face-up cards */
+#leftcard img {
+    float: right;
+    margin-right: 10px;
+}
+/* for face-down cards */
+#rightcard img {
+    float: left;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.card {
+    max-width: 300px;
+}
+.clearfix { clear: both; }
+
+#info p {
+    padding-top: 0.5em;
+    font-size: 2em;
+    width: 50%;
+    float: left;
+}
+#info p.leftp {
+    text-align: right;
+    padding-right: 20px;
+}
+#info p.rightp {
+    text-align: left;
+    padding-left: 20px;
+}
+.message {
+    width: 300px;
+    font-size: 2em;
+    padding: 120px 10px 100px 20px;
+    margin-left: 10px;
+    text-align: left;
+    background: #ccf;
+    border-radius: 30px;
+}
+.hand { cursor: pointer; }
