@@ -62,7 +62,7 @@ a:hover {
     float: left;
     width: 50%;
     /* without height, the left div collapses */
-    height: 418px; /* proportional to 300px width of card */
+    min-height: 1px; /* proportional to 300px width of card */
 }
 /* for face-up cards */
 #leftcard img {
@@ -104,3 +104,25 @@ a:hover {
     border-radius: 30px;
 }
 .hand { cursor: pointer; }
+
+/* media queries */
+@media (max-width: 800px) {
+    #wrapper { width: 100%; }
+    #info p.leftp { padding-left: 10px; }
+    #info p.rightp { padding-right: 10px; }
+}
+@media (max-width: 600px) {
+    section { padding: 20px 0; }
+    section p, h2 {
+        padding-left: 15px;
+        padding-right: 10px;
+    }
+    h2 { text-align: left; }
+    .card { max-width: 150px; }
+    #info p { font-size: 1.5em; }
+    .message {
+        width: 150px;
+        font-size: 1.5em;
+        padding: 10px 10px 10px 20px;
+    }
+}
